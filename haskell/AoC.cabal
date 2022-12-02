@@ -33,6 +33,7 @@ library
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -O2
   build-depends:
       base >=4.7 && <5
+    , parsec
   default-language: Haskell2010
 
 executable AoC-exe
@@ -45,6 +46,7 @@ executable AoC-exe
   build-depends:
       AoC
     , base >=4.7 && <5
+    , parsec
   default-language: Haskell2010
 
 test-suite AoC-test
@@ -58,6 +60,7 @@ test-suite AoC-test
   build-depends:
       AoC
     , base >=4.7 && <5
+    , parsec
   default-language: Haskell2010
 
 benchmark AoC-bench
@@ -72,4 +75,5 @@ benchmark AoC-bench
       AoC
     , base >=4.7 && <5
     , criterion
+    , parsec
   default-language: Haskell2010

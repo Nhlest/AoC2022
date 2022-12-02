@@ -1,7 +1,8 @@
 #![feature(associated_type_defaults)]
 
-use std::fs;
 use crate::solutions::day1::Day1;
+use std::fs;
+use crate::solutions::day2::Day2;
 
 mod solutions;
 
@@ -26,4 +27,5 @@ trait Solution {
 
 fn main() {
   println!("{:?}", Day1::run_both_parts(load_input(1)));
+  println!("{:?}", Day2::run_both_parts(load_input(2)));
 }
