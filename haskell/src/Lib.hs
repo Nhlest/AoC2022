@@ -6,6 +6,8 @@ import Text.Parsec
 import Text.Parsec.String
 import Control.Applicative (liftA2)
 import Data.Either
+import Data.Char
+import Data.List.Split
 
 data Part1
 data Part2
@@ -84,5 +86,18 @@ instance Solution Day2 where
          outcome ScissorsWin ScissorsWin = (6, RockLose)
          go (a, b) = let (score1, turn) = outcome a b in score1 + score turn
 
--- >>> :t fromRight
--- Right [(RockLose,RockLose),(PaperDraw,PaperDraw)]
+data Day3 = Day3
+instance Solution Day3 where
+  data PreparedInput Day3 = PreparedInput3 { getInput3 :: [String] }
+  type Output Day3 Part1 = Int
+  type Output Day3 Part2 = Int
+  prepareInput _ = PreparedInput3 . lines
+  runPart1 _ = sum . map go . getInput3
+   where go line = points $ head $ intersect a b
+          where len    = length line `div` 2
+                (a, b) = splitAt len line
+  runPart2 _ = sum . map go . chunksOf 3 . getInput3
+   where go [a, b, c] = points $ head $ intersect a b `intersect` intersect b c
+
+points c | c >= 'a' && c <= 'z' = ord c - ord 'a' + 1
+         | c >= 'A' && c <= 'Z' = ord c - ord 'A' + 27
