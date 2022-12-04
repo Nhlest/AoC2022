@@ -11,4 +11,6 @@ main = do
   print $ (runBothParts Day2 input)
   input <- readFile "../inputs/day03"
   print $ (runBothParts Day3 input)
+  input <- readFile "../inputs/day04"
+  print $ (runBothParts Day4 input)
   pure ()

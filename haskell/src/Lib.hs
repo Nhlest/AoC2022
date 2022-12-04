@@ -8,6 +8,7 @@ import Control.Applicative (liftA2)
 import Data.Either
 import Data.Char
 import Data.List.Split
+import Control.Monad
 
 data Part1
 data Part2
@@ -101,3 +102,31 @@ instance Solution Day3 where
 
 points c | c >= 'a' && c <= 'z' = ord c - ord 'a' + 1
          | c >= 'A' && c <= 'Z' = ord c - ord 'A' + 27
+
+data Interval = Interval Int Int
+
+parseIntervals :: Parser [(Interval, Interval)]
+parseIntervals = many1 $ do
+   a <- interval
+   char ','
+   b <- interval
+   many newline
+   pure (a, b)
+  where interval = do
+          from <- many1 digit
+          char '-'
+          to <- many1 digit
+          pure $ Interval (read from) (read to)
+
+data Day4 = Day4
+instance Solution Day4 where
+  data PreparedInput Day4 = PreparedInput4 { getInput4 :: [(Interval,Interval)] }
+  type Output Day4 Part1 = Int
+  type Output Day4 Part2 = Int
+  prepareInput _ = PreparedInput4 . fromRight [] . runParser parseIntervals () ""
+  runPart1 _ = sum . map go . getInput4
+    where go (Interval a b, Interval c d) = if (==) (l1 `min` l2) $ length $ [a..b] `intersect` [c..d] then 1 else 0
+           where l1 = length [a..b]
+                 l2 = length [c..d]
+  runPart2 _ = sum . map go . getInput4
+    where go (Interval a b, Interval c d) = if null $ [a..b] `intersect` [c..d] then 0 else 1
