@@ -6,12 +6,10 @@ SplitBy←{(¬𝕨⍷𝕩)((¬-˜⊢×·+`»⊸>)⊸⊔)𝕩}
 moves←' '⊸SplitBy¨i
 moves↩{•BQN¨({∨´"0123456789"∊𝕩}¨𝕩)/𝕩}¨moves
 _Domove←{
-  count‿from‿to←𝕩
-  moving←𝔽count↑(from-1)⊸⊑m
-  m↩moving⊸∾⌾((to-1)⊸⊑) count⊸↓⌾((from-1)⊸⊑) m
+  0⊸=≠𝕩?𝕨;
+  count‿from‿to←⊑𝕩
+  moving←𝔽count↑(from-1)⊸⊑𝕨
+  (moving⊸∾⌾((to-1)⊸⊑) count⊸↓⌾((from-1)⊸⊑) 𝕨) 𝔽_Domove 1↓𝕩
 }
-⌽_Domove¨ moves
-•Show ⊑¨m
-m↩{<((¬' '⍷𝕩)/𝕩)}˘⍉>c
-⊢_Domove¨ moves
-•Show ⊑¨m
+•Show ⊑¨m ⌽_Domove moves
+•Show ⊑¨m ⊢_Domove moves
